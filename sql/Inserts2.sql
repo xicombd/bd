@@ -9,7 +9,7 @@ TRUNCATE TABLE leilao;
 TRUNCATE TABLE leiloeira;
 TRUNCATE TABLE pessoac;
 TRUNCATE TABLE pessoa;
-SET foreign_key_checks = 1 ;
+SET foreign_key_checks = 1;
 
 INSERT INTO pessoa (nif,nome,pin) VALUES
 (41352,"Daniel da Costa Vasco",41352),
