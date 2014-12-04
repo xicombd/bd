@@ -39,38 +39,36 @@
     $_SESSION['username'] = $username;
     $_SESSION['nif'] = $nif;
     // Apresenta os leilões
-    $sql = "SELECT * FROM leilao as l, leilaor as lr
+    $sql = "SELECT *, DATEDIFF(DAY, CURDATE(), DATE_ADD(l.dia, INTERVAL lr.nrdias DAY)) as diasrestantes FROM leilao as l, leilaor as lr
 	      WHERE l.nif = lr.nif AND l.dia = lr.dia AND l.nrleilaonodia = lr.nrleilaonodia";
     $result = $connection->query($sql);
+    if(!result) {
+		echo("<p> Erro na Query:($sql) <p>");
+		exit();
+    }
     echo("<table border=\"1\">\n");
-    echo("<tr><td>ID</td><td>nif</td><td>diahora</td><td>NrDoDia</td><td>nome</td><td>tipo</td><td>valorbase</td><td>nrdias</td><td>lid</td></tr>\n");
+    echo("<tr><td>ID</td><td>nif</td><td>diahora</td><td>NrDoDia</td><td>nome</td><td>tipo</td><td>valorbase</td><td>nrdias</td><td>lid</td><td>diasSoma</td></tr>\n");
     $idleilao = 0;
     foreach($result as $row){
-		/*if (date_add(strtotime($row["dia"], date_interval_create_from_date_string($row["nrdias"] . " days")))) {
+  		/*if (date_add(strtotime($row["dia"], date_interval_create_from_date_string($row["nrdias"] . " days")))) {
 
-		}*/
-		/*$data1 = strtotime($row["dia"]);
-		$fim = $data1 + ($row["nrdias"] * 3600 * 24);
+  		}*/
+  		$data1 = strtotime($row["dia"]);
+  		$fim = $data1 + ($row["nrdias"] * 3600 * 24);
 
-		if(!coiso) {
-			echo "erro";
-		}
-		echo $fim;
-		echo "\n";*/
-
-
-      $idleilao = $idleilao +1;
-      echo("<tr><td>");
-      echo($idleilao); echo("</td><td>");
-      echo($row["nif"]); echo("</td><td>");
-      // echo($row["diahora"]); echo("</td><td>");
-      echo($row["nrleilaonodia"]); echo("</td><td>");
-      echo($row["nome"]); echo("</td><td>");
-      echo($row["tipo"]); echo("</td><td>");
-      echo($row["valorbase"]); echo("</td><td>");
-      echo($row["nrdias"]); echo("</td><td>");
-      echo($row["lid"]); echo("</td><td>");
-      $leilao[$idleilao]= array($row["nif"],$row["diahora"],$row["nrleilaonodia"],$row["nrdias"],$row["lid"]);
+  		$idleilao = $idleilao +1;
+  		echo("<tr><td>");
+  		echo($idleilao); echo("</td><td>");
+  		echo($row["nif"]); echo("</td><td>");
+  		echo($row["diahora"]); echo("</td><td>");
+  		echo($row["nrleilaonodia"]); echo("</td><td>");
+  		echo($row["nome"]); echo("</td><td>");
+  		echo($row["tipo"]); echo("</td><td>");
+  		echo($row["valorbase"]); echo("</td><td>");
+  		echo($row["nrdias"]); echo("</td><td>");
+  		echo($row["lid"]); echo("</td><td>");
+  		echo($row["diasrestantes"]); echo("</td><td>");
+  		$leilao[$idleilao]= array($row["nif"],$row["diahora"],$row["nrleilaonodia"],$row["nrdias"],$row["lid"],$row["diasrestantes"]);
     }
     echo("</table>\n");
   ?>
