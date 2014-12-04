@@ -18,15 +18,16 @@
     // Carregamento das variáveis username e pin do form HTML através do metodo POST;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $lid = test_input($_POST["lid"]);
+
+      //regista a pessoa no leilão. Exemplificativo apenas.....
+      $sql = "INSERT INTO concorrente (pessoa,leilao) VALUES ($nif,$lid)";
+      $result = $connection->query($sql);
+      if (!$result) {
+        echo("<p> Pessoa nao registada: Erro na Query:($sql) <p>");
+        exit();
+      }
+      echo("<p> Pessoa ($username), nif ($nif) Registada no leilao ($lid)</p>\n");
     }
-    //regista a pessoa no leilão. Exemplificativo apenas.....
-    $sql = "INSERT INTO concorrente (pessoa,leilao) VALUES ($nif,$lid)";
-    $result = $connection->query($sql);
-    if (!$result) {
-      echo("<p> Pessoa nao registada: Erro na Query:($sql) <p>");
-      exit();
-    }
-    echo("<p> Pessoa ($username), nif ($nif) Registada no leilao ($lid)</p>\n");
 
     echo("<p> Leiloes em que este individuo esta a concorrer: </p>\n");
 
@@ -36,10 +37,12 @@
 
     echo("<table border=\"1\">\n");
     echo("<tr><td>leilao</td></tr>\n");
+    $idleilao = 0;
     foreach($result as $row){
       echo("<tr><td>");
       echo($row["leilao"]); echo("</td><td>");
-      // $leilao[$idleilao]= array($row["leilao"]);
+      $idleilao = $idleilao + 1;
+      $leilao[$idleilao]= array($row["leilao"]);
     }
     echo("</table>\n");
 

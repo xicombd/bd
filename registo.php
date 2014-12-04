@@ -17,31 +17,33 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $username = test_input($_POST["username"]);
       $pin = test_input($_POST["pin"]);
-    }
-    echo("<p>Valida Pin da Pessoa $username</p>\n");
-    // obtem o pin da tabela pessoa
-    $sql = "SELECT * FROM pessoa WHERE nif=" . $username;
-    $result = $connection->query($sql);
-    if (!$result) {
-      echo("<p> Erro na Query:($sql)<p>");
-      exit();
-    }
-    foreach($result as $row){
-      $safepin = $row["pin"];
-      $nif = $row["nif"];
-    }
-    if ($safepin != $pin ) {
-      echo "<p>Pin Invalido! Exit!</p>\n";
-      $connection = null;
-      exit;
-    }
-    echo "<p>Pin Valido! </p>\n";
 
-    echo "<p>Leiloes em curso ou a iniciar: </p>\n";
+      echo("<p>Valida Pin da Pessoa $username</p>\n");
+      // obtem o pin da tabela pessoa
+      $sql = "SELECT * FROM pessoa WHERE nif=" . $username;
+      $result = $connection->query($sql);
+      if (!$result) {
+        echo("<p> Erro na Query:($sql)<p>");
+        exit();
+      }
+      foreach($result as $row){
+        $safepin = $row["pin"];
+        $nif = $row["nif"];
+      }
+      if ($safepin != $pin ) {
+        echo "<p>Pin Invalido! Exit!</p>\n";
+        $connection = null;
+        exit;
+      }
+      echo "<p>Pin Valido! </p>\n";
 
-    // passa variaveis para a sessao;
-    $_SESSION['username'] = $username;
-    $_SESSION['nif'] = $nif;
+      echo "<p>Leiloes em curso ou a iniciar: </p>\n";
+
+      // passa variaveis para a sessao;
+      $_SESSION['username'] = $username;
+      $_SESSION['nif'] = $nif;
+    }
+
     // Apresenta os leilões
     $sql = "SELECT *, DATEDIFF(DATE_ADD(l.dia, INTERVAL lr.nrdias DAY), CURDATE()) as diasrestantes FROM leilao as l, leilaor as lr
 	      WHERE l.nif = lr.nif AND l.dia = lr.dia AND l.nrleilaonodia = lr.nrleilaonodia";
