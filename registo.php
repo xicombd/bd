@@ -1,8 +1,7 @@
 <html>
 <body>
   <?php
-    // inicia sessão para passar variaveis entre ficheiros php
-    session_start();
+    require_once('./globals.php');
     // Função para limpar os dados de entrada
     function test_input($data) {
       $data = trim($data);
@@ -16,15 +15,6 @@
       $pin = test_input($_POST["pin"]);
     }
     echo("<p>Valida Pin da Pessoa $username</p>\n");
-    // Variáveis de conexão à BD
-    $host="db.ist.utl.pt"; // o MySQL esta disponivel nesta maquina
-    $user="ist175735"; // -> substituir pelo nome de utilizador
-    $password="dakn7512"; // -> substituir pela password dada pelo mysql_reset
-    $dbname = $user; // a BD tem nome identico ao utilizador
-    echo("<p>Projeto Base de Dados Parte II</p>\n");
-    $connection = new PDO("mysql:host=" . $host. ";dbname=" . $dbname, $user, $password,
-    array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
-    echo("<p>Connected to MySQL database $dbname on $host as user $user</p>\n");
     // obtem o pin da tabela pessoa
     $sql = "SELECT * FROM pessoa WHERE nif=" . $username;
     $result = $connection->query($sql);
@@ -49,19 +39,19 @@
     $sql = "SELECT * FROM leilao";
     $result = $connection->query($sql);
     echo("<table border=\"1\">\n");
-    echo("<tr><td>ID</td><td>nif</td><td>diahora</td><td>NrDoDia</td><td>nome</td><td>tipo</td><td>valorbase</td></tr>\n");
+    echo("<tr><td>ID</td><td>nif</td><!--<td>diahora</td>--><td>NrDoDia</td><td>nome</td><td>tipo</td><td>valorbase</td></tr>\n");
     $idleilao = 0;
     foreach($result as $row){
       $idleilao = $idleilao +1;
       echo("<tr><td>");
       echo($idleilao); echo("</td><td>");
       echo($row["nif"]); echo("</td><td>");
-      echo($row["diahora"]); echo("</td><td>");
+      // echo($row["diahora"]); echo("</td><td>");
       echo($row["nrleilaonodia"]); echo("</td><td>");
       echo($row["nome"]); echo("</td><td>");
       echo($row["tipo"]); echo("</td><td>");
       echo($row["valorbase"]); echo("</td><td>");
-      $leilao[$idleilao]= array($row["nif"],$row["diahora"],$row["nrleilaonodia"]);
+      $leilao[$idleilao]= array($row["nif"],/*$row["diahora"],*/$row["nrleilaonodia"]);
     }
     echo("</table>\n");
   ?>

@@ -1,8 +1,7 @@
 <html>
 <body>
   <?php
-    // inicia sessão para passar variaveis entre ficheiros php
-    session_start();
+    require_once('./globals.php');
     $username = $_SESSION['username'];
     $nif = $_SESSION['nif'];
     // Função para limpar os dados de entrada
@@ -16,14 +15,6 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $lid = test_input($_POST["lid"]);
     }
-    // Conexão à BD
-    $host="db.ist.utl.pt"; // o MySQL esta disponivel nesta maquina
-    $user="ist175735"; // -> substituir pelo nome de utilizador
-    $password="dakn7512"; // -> substituir pela password dada pelo mysql_reset
-    $dbname = $user; // a BD tem nome identico ao utilizador
-    $connection = new PDO("mysql:host=" . $host. ";dbname=" . $dbname, $user, $password,
-    array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
-    echo("<p>Connected to MySQL database $dbname on $host as user $user</p>\n");
     //regista a pessoa no leilão. Exemplificativo apenas.....
     $sql = "INSERT INTO concorrente (pessoa,leilao) VALUES ($nif,$lid)";
     $result = $connection->query($sql);
@@ -32,13 +23,13 @@
       exit();
     }
     echo("<p> Pessoa ($username), nif ($nif) Registada no leilao ($lid)</p>\n");
-    
+
     echo("<p> Leiloes em que este individuo esta a concorrer: </p>\n");
-    
-   
+
+
     $sql = "SELECT * FROM concorrente WHERE pessoa = $nif";
     $result = $connection->query($sql);
-    
+
     echo("<table border=\"1\">\n");
     echo("<tr><td>leilao</td></tr>\n");
     foreach($result as $row){
@@ -47,7 +38,7 @@
       $leilao[$idleilao]= array($row["leilao"]);
     }
     echo("</table>\n");
-    
+
   ?>
   <form action="lance.php" method="post">
     <h2>Comprar cenas</h2>
