@@ -39,7 +39,7 @@
     $_SESSION['username'] = $username;
     $_SESSION['nif'] = $nif;
     // Apresenta os leilões
-    $sql = "SELECT *, DATEDIFF(DAY, CURDATE(), DATE_ADD(l.dia, INTERVAL lr.nrdias DAY)) as diasrestantes FROM leilao as l, leilaor as lr
+    $sql = "SELECT *, DATEDIFF(CURDATE(), (DATE_ADD(l.dia, INTERVAL lr.nrdias DAY))) as diasrestantes FROM leilao as l, leilaor as lr
 	      WHERE l.nif = lr.nif AND l.dia = lr.dia AND l.nrleilaonodia = lr.nrleilaonodia";
     $result = $connection->query($sql);
     if(!result) {
