@@ -1,6 +1,4 @@
 <?php
-  // inicia sessão para passar variaveis entre ficheiros php
-  session_start();
   // Variáveis de conexão à BD
   $host="db.ist.utl.pt"; // o MySQL esta disponivel nesta maquina
   $user="ist175735"; // -> substituir pelo nome de utilizador

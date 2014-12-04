@@ -3,6 +3,9 @@
   <?php
     require_once('./globals.php');
 
+    // inicia sessão para passar variaveis entre ficheiros php
+    session_start();
+
     $nif = $_SESSION['nif'];
     // Função para limpar os dados de entrada
     function test_input($data) {

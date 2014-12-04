@@ -2,6 +2,10 @@
 <body>
   <?php
     require_once('./globals.php');
+
+    // inicia sessão para passar variaveis entre ficheiros php
+    session_start();
+
     $username = $_SESSION['username'];
     $nif = $_SESSION['nif'];
     // Função para limpar os dados de entrada
@@ -35,7 +39,7 @@
     foreach($result as $row){
       echo("<tr><td>");
       echo($row["leilao"]); echo("</td><td>");
-      $leilao[$idleilao]= array($row["leilao"]);
+      // $leilao[$idleilao]= array($row["leilao"]);
     }
     echo("</table>\n");
 
