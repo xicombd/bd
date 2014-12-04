@@ -53,26 +53,22 @@
   		exit();
     }
     echo("<table border=\"1\">\n");
-    echo("<tr><td>ID</td><td>nif</td><td>dia</td><td>NrDoDia</td><td>nome</td><td>tipo</td><td>valorbase</td><td>nrdias</td><td>lid</td><td>diasSoma</td></tr>\n");
-    $idleilao = 0;
+    echo("<tr><td>lid</td><td>nif</td><td>dia</td><td>NrDoDia</td><td>nome</td><td>tipo</td><td>valorbase</td><td>nrdias</td><td>diasSoma</td></tr>\n");
     foreach($result as $row){
   		if ($row["diasrestantes"] > 0) {
     		$data1 = strtotime($row["dia"]);
     		$fim = $data1 + ($row["nrdias"] * 3600 * 24);
 
-    		$idleilao = $idleilao +1;
     		echo("<tr><td>");
-    		echo($idleilao); echo("</td><td>");
-    		echo($row["nif"]); echo("</td><td>");
+    		echo($row["lid"]); echo("</td><td>");
+        echo($row["nif"]); echo("</td><td>");
     		echo($row["dia"]); echo("</td><td>");
     		echo($row["nrleilaonodia"]); echo("</td><td>");
     		echo($row["nome"]); echo("</td><td>");
     		echo($row["tipo"]); echo("</td><td>");
     		echo($row["valorbase"]); echo("</td><td>");
     		echo($row["nrdias"]); echo("</td><td>");
-    		echo($row["lid"]); echo("</td><td>");
     		echo($row["diasrestantes"]); echo("</td><td>");
-    		$leilao[$idleilao]= array($row["nif"],$row["dia"],$row["nrleilaonodia"],$row["nrdias"],$row["lid"],$row["diasrestantes"]);
       }
     }
     echo("</table>\n");
