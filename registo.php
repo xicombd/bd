@@ -43,47 +43,20 @@
       $_SESSION['username'] = $username;
       $_SESSION['nif'] = $nif;
     }
-
-    echo "<p>Leiloes em que o utilizador participa: </p>\n";
     
-    // Apresenta os leilões em que o utilizador esta inscrito
-    $sql = "SELECT *, DATEDIFF(DATE_ADD(l.dia, INTERVAL lr.nrdias DAY), CURDATE()) as diasrestantes
-			FROM leilao as l, leilaor as lr, concorrente as c, lance as l
-			WHERE l.nif = lr.nif AND l.dia = lr.dia AND l.nrleilaonodia = lr.nrleilaonodia AND c.leilao = lr.lid AND c.pessoa = " . $username .
-			" ORDER BY lr.lid ASC";
-    $result = $connection->query($sql);
-    if(!$result) {
-  		echo("<p> Erro na Query:($sql) <p>");
-  		exit();
+    if($_SESSION['nif']=='') {
+      header("Location: login.html"); /* Redirect browser */
+      exit();
     }
-    echo("<table border=\"1\">\n");
-    echo("<tr><td>lid</td><td>nif</td><td>dia</td><td>NrDoDia</td><td>nome</td><td>tipo</td><td>valorbase</td><td>nrdias</td><td>diasrestantes</td></tr>\n");
-    foreach($result as $row){
-  		if ($row["diasrestantes"] > 0) {
-    		$data1 = strtotime($row["dia"]);
-    		$fim = $data1 + ($row["nrdias"] * 3600 * 24);
-
-    		echo("<tr><td>");
-    		echo($row["lid"]); echo("</td><td>");
-			echo($row["nif"]); echo("</td><td>");
-    		echo($row["dia"]); echo("</td><td>");
-    		echo($row["nrleilaonodia"]); echo("</td><td>");
-    		echo($row["nome"]); echo("</td><td>");
-    		echo($row["tipo"]); echo("</td><td>");
-    		echo($row["valorbase"]); echo("</td><td>");
-    		echo($row["nrdias"]); echo("</td><td>");
-    		echo($row["diasrestantes"]);
-      }
-    }
-    echo("</table>\n");
     
     
     echo "<p>Leiloes em curso ou a iniciar: </p>\n";
     
     // Apresenta os leilões
-    $sql = "SELECT *, DATEDIFF(DATE_ADD(l.dia, INTERVAL lr.nrdias DAY), CURDATE()) as diasrestantes FROM leilao as l, leilaor as lr
-	      WHERE l.nif = lr.nif AND l.dia = lr.dia AND l.nrleilaonodia = lr.nrleilaonodia
-	      ORDER BY lr.lid ASC";
+    $sql = "SELECT *, DATEDIFF(DATE_ADD(leilaor.dia, INTERVAL leilaor.nrdias DAY), CURDATE()) as diasrestantes
+			FROM leilaor, leilao
+			WHERE leilaor.nif = leilao.nif AND leilaor.dia = leilao.dia AND leilaor.nrleilaonodia = leilao.nrleilaonodia
+			ORDER BY leilaor.lid ASC";
     $result = $connection->query($sql);
     if(!$result) {
   		echo("<p> Erro na Query:($sql) <p>");

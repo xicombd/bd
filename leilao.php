@@ -28,11 +28,16 @@
       }
       echo("<p> Pessoa ($username), nif ($nif) Registada no leilao ($lid)</p>\n");
     }
+    
+    if($_SESSION['nif']=='') {
+      header("Location: login.html"); /* Redirect browser */
+      exit();
+    }
 
     echo("<p> Leiloes em que este individuo esta a concorrer: </p>\n");
 
 
-    $sql = "SELECT * FROM concorrente WHERE pessoa = $nif";
+    $sql = "SELECT * FROM concorrente WHERE pessoa = ". $_SESSION['nif'];
     $result = $connection->query($sql);
 
     echo("<table border=\"1\">\n");

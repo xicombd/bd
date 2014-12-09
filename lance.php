@@ -18,7 +18,16 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $leilao = test_input($_POST["leilao"]);
       $valor = test_input($_POST["valor"]);
+    
+    
     }
+    
+    if($_SESSION['nif']=='') {
+      header("Location: login.html"); /* Redirect browser */
+      exit();
+    }
+    
+    
     //regista a pessoa no leilão. Exemplificativo apenas.....
     $sql = "INSERT INTO lance (pessoa,leilao,valor) VALUES ($nif,$leilao,$valor)";
     $result = $connection->query($sql);
@@ -29,7 +38,7 @@
     echo("<p> Lance feito </p>\n");
 
     //termina a sessão
-    session_destroy();
+    //session_destroy();
   ?>
 </body>
 </html>
