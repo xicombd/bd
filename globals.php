@@ -11,6 +11,7 @@
   
   
   echo("<a href='registo'>Registo</a> \n");
+  echo("<a href='t-registo'>Registo Atomico</a> \n");
   echo("<a href='leilao'>Leiloes</a> \n");
   echo("<a href='estado'>Estado</a> \n");
   

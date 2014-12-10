@@ -81,31 +81,6 @@
     }
     echo("</table>\n");
     
-    
-    // teste query 1
-    $sql = "SELECT C.pessoa
-	    FROM concorrente C
-	    WHERE C.pessoa NOT IN
-	    (
-	      SELECT L.pessoa
-	      FROM lance L
-	    )";
-    $result = $connection->query($sql);
-    if(!$result) {
-  		echo("<p> Erro na Query:($sql) <p>");
-  		exit();
-    }
-    
-    echo("<table border=\"1\">\n");
-    echo("<tr><td>leilao</td><td>pessoa</td></tr>\n");
-    foreach($result as $row){
-  		
-	echo("<tr><td>");
-	echo($row["pessoa"]);
-
-    }
-    echo("</table>\n");
-    
   ?>
   <form action="leilao.php" method="post">
     <h2>Escolha o ID do leilão que pretende concorrer</h2>
