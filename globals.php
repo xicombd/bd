@@ -8,12 +8,12 @@
   $connection = new PDO("mysql:host=" . $host. ";dbname=" . $dbname, $user, $password,
   array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
   echo("<p>Connected to MySQL database $dbname on $host as user $user</p>\n");
-  
-  
+
+
   echo("<a href='registo'>Registo</a> \n");
   echo("<a href='t-registo'>Registo Atomico</a> \n");
   echo("<a href='leilao'>Leiloes</a> \n");
   echo("<a href='estado'>Estado</a> \n");
-  
-  session_start();
+
+  // session_start();
 ?>

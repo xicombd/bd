@@ -23,11 +23,14 @@
       //regista a pessoa no leilão. Exemplificativo apenas.....
       $sql = "INSERT INTO concorrente (pessoa,leilao) VALUES ($nif,$lid)";
       $result = $connection->query($sql);
+
       if (!$result) {
         echo("<p> Pessoa nao registada: Erro na Query:($sql) <p>");
-        exit();
+        //exit();
       }
-      echo("<p> Pessoa ($username), nif ($nif) Registada no leilao ($lid)</p>\n");
+      else {
+        echo("<p> Pessoa ($username), nif ($nif) Registada no leilao ($lid)</p>\n");
+      }
     }
 
     if($_SESSION['nif']=='') {
@@ -37,16 +40,31 @@
 
     echo("<p> Leiloes em que este individuo esta a concorrer: </p>\n");
 
-    $sql = "SELECT * FROM concorrente WHERE pessoa = ". $_SESSION['nif'];
+    $sql = "SELECT leilao,leilao.dia,leilao.nrleilaonodia,nome,valorbase,tipo
+            FROM concorrente,leilaor,leilao
+            WHERE concorrente.leilao=leilaor.lid AND leilaor.dia = leilao.dia
+              AND leilaor.nrleilaonodia = leilao.nrleilaonodia AND leilao.nif=leilaor.nif
+              AND pessoa = ". $_SESSION['nif'];
     $result = $connection->query($sql);
 
     echo("<table border=\"1\">\n");
-    echo("<tr><td>leilao</td></tr>\n");
+    echo("<tr><td>leilao</td><td>dia</td><td>nrleilaonodia</td><td>nome</td><td>valorbase</td><td>tipo</td></tr>\n");
     $idleilao = 0;
 
     foreach($result as $row) {
       echo("<tr><td>");
-      echo($row["leilao"]); echo("</td><td>");
+      echo($row["leilao"]);
+      echo("</td><td>");
+      echo($row["dia"]);
+      echo("</td><td>");
+      echo($row["nrleilaonodia"]);
+      echo("</td><td>");
+      echo($row["nome"]);
+      echo("</td><td>");
+      echo($row["valorbase"]);
+      echo("</td><td>");
+      echo($row["tipo"]);
+      echo("</td></tr>");
       $idleilao = $idleilao + 1;
       $leilao[$idleilao]= array($row["leilao"]);
     }
