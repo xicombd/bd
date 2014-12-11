@@ -18,18 +18,14 @@ GROUP BY pessoa.nome
 HAVING COUNT(*) = 2;
 
 //ex3
-SELECT dia, nif, nrleilaonodia
+SELECT dia, nif, nrleilaonodia, MAX(maxvalor/valorbase) as ratio
 FROM (
-  SELECT dia, nif, nrleilaonodia, MAX(ratio)
-  FROM (
-    SELECT leilao.dia, leilao.nif, leilao.nrleilaonodia, MAX(lance.valor/leilao.valorbase) as ratio
-    FROM leilao, lance, leilaor
-    WHERE lance.leilao = leilaor.lid
-    AND leilao.nif = leilaor.nif AND leilao.dia = leilaor.dia AND leilao.nrleilaonodia = leilaor.nrleilaonodia
-    GROUP BY leilaor.lid
-  ) as tabela1
-) as tabela2;
-
+  SELECT leilao.dia, leilao.nif, leilao.nrleilaonodia, MAX(lance.valor) as maxvalor, valorbase
+  FROM leilao, lance, leilaor
+  WHERE lance.leilao = leilaor.lid
+  AND leilao.nif = leilaor.nif AND leilao.dia = leilaor.dia AND leilao.nrleilaonodia = leilaor.nrleilaonodia
+  GROUP BY leilaor.lid
+) as tabela;
 
 //ex4
 SELECT DISTINCT pessoa.nome, p1.nif, p1.capitalsocial
@@ -72,3 +68,11 @@ WHERE 40 = lance.leilao)
   END IF;
 END //
 delimiter ;
+
+
+//indices
+//ex3
+Como todas as operações feitas nesta query são feitas sobre chaves primárias ou únicas, não é necessário criar índices extra, sendo usados apenas os pré-definidos pelo MySQL
+
+//ex4
+CREATE INDEX IndexCS on pessoac(capitalsocial) USING BTREE;
