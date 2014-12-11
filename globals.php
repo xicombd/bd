@@ -9,9 +9,9 @@
   $connection = new PDO("mysql:host=" . $host. ";dbname=" . $dbname, $user, $password,
   array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
 
-  echo("<div class=\"ink-alert basic info\" role=\"alert\">");
-  echo("<p><b>Connection:</b> Connected to MySQL database $dbname on $host as user $user</p>");
-  echo("</div>");
+  echo("<div class=\"ink-alert basic info\" role=\"alert\">
+          <p><b>Connection:</b> Connected to MySQL database $dbname on $host as user $user</p>
+        </div>");
 
   // Função para limpar os dados de entrada
   function test_input($data) {

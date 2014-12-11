@@ -9,6 +9,41 @@
     // inicia sessão para passar variaveis entre ficheiros php
     session_start();
 
+    // Carregamento das variáveis username e pin do form HTML através do metodo POST;
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $username = test_input($_POST["username"]);
+      $pin = test_input($_POST["pin"]);
+      // echo("<h5>Valida Pin da Pessoa $username</h5>\n");
+      // obtem o pin da tabela pessoa
+      $sql = "SELECT * FROM pessoa WHERE nif=" . $username;
+      $result = $connection->query($sql);
+      if (!$result) {
+        echo("<div class=\"ink-alert basic error\" role=\"alert\">
+                <p><b>Erro!</b></p>
+              </div>");
+        exit();
+      }
+      foreach($result as $row){
+        $safepin = $row["pin"];
+        $nif = $row["nif"];
+      }
+      if ($safepin != $pin ) {
+        echo("<div class=\"ink-alert basic error\" role=\"alert\">
+                <p><b>Pin inválido!</b></p>
+              </div>");
+        $connection = null;
+        exit;
+      }
+
+      echo("<div class=\"ink-alert basic success\" role=\"alert\">
+              <p><b>Pin válido!</b></p>
+            </div>");
+
+      // passa variaveis para a sessao;
+      $_SESSION['username'] = $username;
+      $_SESSION['nif'] = $nif;
+    }
+
     if($_SESSION['nif']=='') {
       header("Location: login.php"); /* Redirect browser */
       exit();
