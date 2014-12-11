@@ -10,7 +10,7 @@
     session_start();
 
    if($_SESSION['nif']=='') {
-      header("Location: login.html"); /* Redirect browser */
+      header("Location: login.php"); /* Redirect browser */
       exit();
     }
 

@@ -34,11 +34,11 @@
     }
 
     if($_SESSION['nif']=='') {
-      header("Location: login.html"); /* Redirect browser */
+      header("Location: login.php"); /* Redirect browser */
       exit();
     }
 
-    echo("<h5> Leiloes em que este individuo esta a concorrer: </h5>\n");
+    echo("<h5> Leilões em que este individuo esta a concorrer: </h5>\n");
 
     $sql = "SELECT leilao,leilao.dia,leilao.nrleilaonodia,nome,valorbase,tipo
             FROM concorrente,leilaor,leilao
