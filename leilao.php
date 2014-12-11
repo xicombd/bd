@@ -15,6 +15,7 @@
       $data = htmlspecialchars($data);
       return $data;
     }
+
     // Carregamento das variáveis username e pin do form HTML através do metodo POST;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $lid = test_input($_POST["lid"]);
@@ -28,7 +29,7 @@
       }
       echo("<p> Pessoa ($username), nif ($nif) Registada no leilao ($lid)</p>\n");
     }
-    
+
     if($_SESSION['nif']=='') {
       header("Location: login.html"); /* Redirect browser */
       exit();
@@ -36,14 +37,14 @@
 
     echo("<p> Leiloes em que este individuo esta a concorrer: </p>\n");
 
-
     $sql = "SELECT * FROM concorrente WHERE pessoa = ". $_SESSION['nif'];
     $result = $connection->query($sql);
 
     echo("<table border=\"1\">\n");
     echo("<tr><td>leilao</td></tr>\n");
     $idleilao = 0;
-    foreach($result as $row){
+
+    foreach($result as $row) {
       echo("<tr><td>");
       echo($row["leilao"]); echo("</td><td>");
       $idleilao = $idleilao + 1;

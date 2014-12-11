@@ -10,28 +10,26 @@
     $nif = $_SESSION['nif'];
     // Carregamento das variáveis username e pin do form HTML através do metodo POST;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      if(isset($_POST['concorre']))
-      {
-      
-	$failed = false;
-	$connection->query("START TRANSACTION");
-	
-	foreach($_POST['concorre'] as $value){
-	  $sql = "INSERT INTO concorrente VALUES ($value)";
-	  $result = $connection->query($sql);
-	  if (!$result) {
-	    $failed = true;
-	  }
-	}
+      if(isset($_POST['concorre'])) {
+      	$failed = false;
+      	$connection->query("START TRANSACTION");
 
-	if ($failed) {
-	  $connection->query("ROLLBACK");
-	} else {
-	  $connection->query("COMMIT");
-	}
+      	foreach($_POST['concorre'] as $value) {
+      	  $sql = "INSERT INTO concorrente VALUES ($value)";
+      	  $result = $connection->query($sql);
+      	  if (!$result) {
+      	    $failed = true;
+      	  }
+      	}
+
+      	if ($failed) {
+      	  $connection->query("ROLLBACK");
+      	} else {
+      	  $connection->query("COMMIT");
+      	}
       }
     }
-    
+
     if($_SESSION['nif']=='') {
       header("Location: login.html"); /* Redirect browser */
       exit();
