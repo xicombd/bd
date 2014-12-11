@@ -27,7 +27,6 @@ FROM (
   GROUP BY leilaor.lid
 ) as tabela;
 
-
 //ex4
 SELECT DISTINCT pessoa.nome, p1.nif, p1.capitalsocial
 FROM pessoac as p1, pessoac as p2, pessoa
@@ -71,11 +70,9 @@ END //
 delimiter ;
 
 
-
-
 //indices
 //ex3
-CREATE INDEX IndexLID on leilaor(lid) USING BTREE;
+Como todas as operações feitas nesta query são feitas sobre chaves primárias ou únicas, não é necessário criar índices extra, sendo usados apenas os pré-definidos pelo MySQL
 
 //ex4
 CREATE INDEX IndexCS on pessoac(capitalsocial) USING BTREE;
