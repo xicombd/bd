@@ -1,5 +1,8 @@
 <html>
+<?php require './head.php'; ?>
 <body>
+  <div class="ink-grid">
+
   <?php
     require_once('./globals.php');
 
@@ -11,7 +14,7 @@
       exit();
     }
 
-    echo "<p>Leiloes em que o utilizador participa: </p>\n";
+    echo "<p>Leilões em que o utilizador participa: </p>\n";
 
     // Apresenta os leilões
     $sql = "SELECT *, DATEDIFF(DATE_ADD(leilaor.dia, INTERVAL leilaor.nrdias DAY), CURDATE()) as diasrestantes, MAX(lance.valor) as valormax
@@ -23,11 +26,25 @@
 			ORDER BY leilaor.lid ASC";
     $result = $connection->query($sql);
     if(!$result) {
-  		echo("<p> Erro na Query:($sql) <p>");
+      echo("<div class=\"ink-alert basic error\" role=\"alert\">
+              <p><b>Erro!</b></p>
+            </div>");
   		exit();
     }
-    echo("<table border=\"1\">\n");
-    echo("<tr><td>lid</td><td>nif</td><td>dia</td><td>NrDoDia</td><td>nome</td><td>tipo</td><td>valorbase</td><td>nrdias</td><td>diasrestantes</td><td>valormax</td></tr>\n");
+    echo("<table class=\"ink-table alternating\">\n");
+    echo("<thead><tr>
+            <th>ID</th>
+            <th>NIF</th>
+            <th>Data</th>
+            <th>Nº do Dia</th>
+            <th>Nome</th>
+            <th>Tipo</th>
+            <th>Valor Base</th>
+            <th>Nº Dias</th>
+            <th>Dias Restantes</th>
+            <th>Valor Max</th>
+          </tr>");
+
     foreach($result as $row){
   		if ($row["diasrestantes"] > 0) {
         $data1 = strtotime($row["dia"]);
@@ -49,5 +66,6 @@
     echo("</table>\n");
 
   ?>
+  </div>
 </body>
 </html>

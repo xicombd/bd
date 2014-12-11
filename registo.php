@@ -1,5 +1,8 @@
 <html>
+<?php require './head.php'; ?>
 <body>
+  <div class="ink-grid">
+
   <?php
     require_once('./globals.php');
 
@@ -11,7 +14,7 @@
       exit();
     }
 
-    echo "<p>Leiloes em curso ou a iniciar: </p>\n";
+    echo "<h5>Leilões em curso ou a iniciar: </h5>";
 
     // Apresenta os leilões
     $sql = "SELECT *
@@ -22,11 +25,24 @@
 
     $result = $connection->query($sql);
     if(!$result) {
-  		echo("<p> Erro na Query:($sql) <p>");
+      echo("<div class=\"ink-alert basic error\" role=\"alert\">
+              <p><b>Erro!</b></p>
+            </div>");
   		exit();
     }
-    echo("<table border=\"1\">\n");
-    echo("<tr><td>lid</td><td>nif</td><td>dia</td><td>NrDoDia</td><td>nome</td><td>tipo</td><td>valorbase</td><td>nrdias</td></tr>\n");
+    echo("<table class=\"ink-table alternating\">\n");
+    echo("<thead>
+           <tr><th>ID</th>
+           <th>NIF</th>
+           <th>Data</th>
+           <th>Nº do Dia</th>
+           <th>Nome</th>
+           <th>Tipo</th>
+           <th>Valor Base</th>
+           <th>Nº dias</th>
+           </tr>
+         </thead>");
+
     foreach($result as $row){
   		// if ($row["diasrestantes"] > 0) {
   		echo("<tr><td>");
@@ -44,9 +60,10 @@
 
   ?>
   <form action="leilao.php" method="post">
-    <h2>Escolha o ID do leilao que pretende concorrer</h2>
+    <h2>Escolha o ID do leilão que pretende concorrer</h2>
     <p>ID: <input type="text" name="lid" /></p>
-    <p><input type="submit" /></p>
+    <p><input class="ink-button" type="submit" /></p>
   </form>
+  </div>
 </body>
 </html>

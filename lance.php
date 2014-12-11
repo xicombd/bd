@@ -1,5 +1,8 @@
 <html>
+<?php require './head.php'; ?>
 <body>
+  <div class="ink-grid">
+
   <?php
     require_once('./globals.php');
 
@@ -23,13 +26,18 @@
     $sql = "INSERT INTO lance (pessoa,leilao,valor) VALUES ($nif,$leilao,$valor)";
     $result = $connection->query($sql);
     if (!$result) {
-      echo("<p> Pessoa nao registada: Erro na Query:($sql) <p>");
-      exit();
+      echo("<div class=\"ink-alert basic error\" role=\"alert\">
+              <p><b>Erro!</b> Provalvemente já tinha feito este lance anteriormente.</p>
+            </div>");
     }
-    echo("<p> Lance feito </p>\n");
-
+    else {
+      echo("<div class=\"ink-alert basic success\" role=\"alert\">
+              <p><b>Sucesso!</b> Lance feito!</p>
+            </div>");
+    }
     //termina a sessão
     //session_destroy();
   ?>
+  </div>
 </body>
 </html>

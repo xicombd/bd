@@ -1,3 +1,4 @@
+<br>
 <?php
   // Variáveis de conexão à BD
   $host="db.ist.utl.pt"; // o MySQL esta disponivel nesta maquina
@@ -7,14 +8,10 @@
   echo("<h1>Projeto Base de Dados Parte II</h1>\n");
   $connection = new PDO("mysql:host=" . $host. ";dbname=" . $dbname, $user, $password,
   array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
-  echo("<p><i>Connected to MySQL database $dbname on $host as user $user</i></p>\n");
 
-  echo("<h3>");
-  echo("<a href='registo'>Registo</a> \n");
-  echo("<a href='t-registo'>Registo Atomico</a> \n");
-  echo("<a href='leilao'>Leiloes</a> \n");
-  echo("<a href='estado'>Estado</a> \n");
-  echo("</h3>");
+  echo("<div class=\"ink-alert basic info\" role=\"alert\">");
+  echo("<p><b>Connection:</b> Connected to MySQL database $dbname on $host as user $user</p>");
+  echo("</div>");
 
   // Função para limpar os dados de entrada
   function test_input($data) {
@@ -25,3 +22,14 @@
   }
   // session_start();
 ?>
+
+<nav class="ink-navigation">
+  <ul class="menu horizontal grey">
+    <li><a href='registo'>Registo</a></li>
+    <li><a href='t-registo'>Registo Atómico</a></li>
+    <li><a href='leilao'>Leilões</a></li>
+    <li><a href='estado'>Estado</a></li>
+  </ul>
+</nav>
+
+<br>
