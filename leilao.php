@@ -8,13 +8,6 @@
 
     $username = $_SESSION['username'];
     $nif = $_SESSION['nif'];
-    // Função para limpar os dados de entrada
-    function test_input($data) {
-      $data = trim($data);
-      $data = stripslashes($data);
-      $data = htmlspecialchars($data);
-      return $data;
-    }
 
     // Carregamento das variáveis username e pin do form HTML através do metodo POST;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -71,10 +64,11 @@
     echo("</table>\n");
 
   ?>
+
   <form action="lance.php" method="post">
     <h2>Comprar cenas</h2>
-    <p>ID : <input type="text" name="leilao" /></p>
-    <p>Valor : <input type="text" name="valor" /></p>
+    <p>ID: <input type="text" name="leilao" /></p>
+    <p>Valor: <input type="text" name="valor" /></p>
     <p><input type="submit" /></p>
   </form>
 </body>

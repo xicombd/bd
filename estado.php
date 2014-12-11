@@ -6,46 +6,12 @@
     // inicia sessão para passar variaveis entre ficheiros php
     session_start();
 
-    // Função para limpar os dados de entrada
-    function test_input($data) {
-      $data = trim($data);
-      $data = stripslashes($data);
-      $data = htmlspecialchars($data);
-      return $data;
-    }
-    // Carregamento das variáveis username e pin do form HTML através do metodo POST;
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      $username = test_input($_POST["username"]);
-      $pin = test_input($_POST["pin"]);
-
-      echo("<p>Valida Pin da Pessoa $username</p>\n");
-      // obtem o pin da tabela pessoa
-      $sql = "SELECT * FROM pessoa WHERE nif=" . $username;
-      $result = $connection->query($sql);
-      if (!$result) {
-        echo("<p> Erro na Query:($sql)<p>");
-        exit();
-      }
-      foreach($result as $row){
-        $safepin = $row["pin"];
-        $nif = $row["nif"];
-      }
-      if ($safepin != $pin ) {
-        echo "<p>Pin Invalido! Exit!</p>\n";
-        $connection = null;
-        exit;
-      }
-      echo "<p>Pin Valido! </p>\n";
-
-    }
-
     if($_SESSION['nif']=='') {
       header("Location: login.html"); /* Redirect browser */
       exit();
     }
 
     echo "<p>Leiloes em que o utilizador participa: </p>\n";
-
 
     // Apresenta os leilões
     $sql = "SELECT *, DATEDIFF(DATE_ADD(leilaor.dia, INTERVAL leilaor.nrdias DAY), CURDATE()) as diasrestantes, MAX(lance.valor) as valormax

@@ -23,7 +23,6 @@
       exit();
     }
 
-
     foreach($result as $row){
        echo("<a href='t-registo-dia.php?dia=" . $row['dia'] . "'>" . $row['dia'] . "</a><br>");
     }
