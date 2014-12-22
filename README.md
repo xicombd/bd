@@ -1,4 +1,4 @@
-:books: Project assignment for the Databases course
+Project assignment for the Databases course
 ==
 
 Check the project description at https://github.com/xicombd/bd/blob/master/docs/Enunciado_BD2_v6.pdf?raw=true
